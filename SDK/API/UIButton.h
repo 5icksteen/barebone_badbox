@@ -5,18 +5,6 @@
 #include "common.h"
 #include "target.h"
 
-enum class Polarity
-{
-  POSITIVE,
-  NEGATIVE
-};
-enum class State
-{
-  LOW,
-  HIGH,
-  FALL,
-  RISE,
-};
 class UIButton : public GPIO
 {
  private:
@@ -63,12 +51,12 @@ class UIButton : public GPIO
     return state_ == state;
   }
 
-  void onPush(fp_t &&func)
+  void onPush(Callback &&func)
   {
     if (state_ == State::RISE)
       func();
   }
-  void onRelease(fp_t &&func)
+  void onRelease(Callback &&func)
   {
     if (state_ == State::FALL)
       func();

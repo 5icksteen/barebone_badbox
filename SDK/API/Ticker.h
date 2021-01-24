@@ -29,7 +29,7 @@ class Ticker
     return count;
   }
 
-  void dispatch(fp_t &&func)
+  void dispatch(Callback &&func)
   {
     if (read_ms() >= 1ms)
       {
@@ -39,4 +39,4 @@ class Ticker
   }
 };
 
-extern Ticker ticker;
+// extern Ticker ticker;

@@ -9,7 +9,7 @@
 class FuncHolder
 {
  private:
-  fp_t mode_ = {};
+  Callback mode_ = {};
 
  public:
   FuncHolder(auto &&func)

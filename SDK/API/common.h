@@ -2,7 +2,7 @@
 
 #include <memory>
 
-using fp_t = void (*)();
+using Callback = void (*)();
 
 enum : bool
 {

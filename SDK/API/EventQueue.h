@@ -16,7 +16,7 @@ enum Call : int32_t
 
 struct Event
 {
-  fp_t event = [] {};
+  Callback event = [] {};
   int8_t cycle = Call::ONCE;
   ms_t counter = 0ms;
   ms_t interval = 0ms;
@@ -41,7 +41,7 @@ class EventQueue
   } _state
       = EMPTY;
 
-  fp_t enqueue(Event &&e)
+  Callback enqueue(Event &&e)
   {
     _state = RUN;
     _queue[_tail & _full] = e;
@@ -49,7 +49,7 @@ class EventQueue
     return e.event;
   }
 
-  fp_t re_enqueue(Event &&e)
+  Callback re_enqueue(Event &&e)
   {
     _queue[(_tail + _re_tail) & _full] = e;
     _re_tail = (_re_tail + 1);
@@ -85,7 +85,7 @@ class EventQueue
 
   Status get_status() { return _state; }
 
-  void stop(fp_t func)
+  void stop(Callback func)
   {
     for (size_t i = 0; i < _full; i++)
       {

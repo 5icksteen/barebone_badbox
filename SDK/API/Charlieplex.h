@@ -104,9 +104,9 @@ class Charlieplex
     if (buffer_[index_[row_count_][column_count_]])
       {
         gpio_[lut_[row_count_][column_count_]].set_mode(GPIO::Mode::OUTPUT);
-        gpio_[lut_[row_count_][column_count_]].write_output((uint32_t)State::LOW);
+        gpio_[lut_[row_count_][column_count_]].write_output((uint32_t)GPIO::State::LOW);
         gpio_[row_count_].set_mode(GPIO::Mode::OUTPUT);
-        gpio_[row_count_].write_output((uint32_t)State::HIGH);
+        gpio_[row_count_].write_output((uint32_t)GPIO::State::HIGH);
       }
   }
 };

@@ -1,28 +1,17 @@
-#include <cstdlib>
-#include <functional>
-#include <vector>
-
-#include "Global.h"
-#include "Ticker.h"
+#include "BSP_BadBox.h"
+#include "SystemTick.h"
 #include "mode.h"
-
-auto all_events = [] {
-  Button[Key1].scan();
-  Button[Key2].scan();
-  Button[Key3].scan();
-  Button[Key4].scan();
-  Button[Key5].scan();
-  modes.dispatch();
-  events.dispatch();
-};
 
 int main()
 {
-  for (;;)
-    {
-      led.scan();
-      ticker.dispatch(all_events);
-    }
-  // static_assert(false, "Error Message");
-  return 0;
+  static_event.call([] { Button[BtnLabel::M].scan(); });
+  static_event.call([] { Button[BtnLabel::N].scan(); });
+  static_event.call([] { Button[BtnLabel::X].scan(); });
+  static_event.call([] { Button[BtnLabel::Y].scan(); });
+  static_event.call([] { Button[BtnLabel::Z].scan(); });
+  static_event.call([] { led.scan(); });
+  static_event.call([] { modes.dispatch(); });
+  static_event.call([] { events.dispatch(); });
+
+  for (;;) {}
 }

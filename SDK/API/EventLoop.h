@@ -11,7 +11,7 @@ template <size_t N = 32>
 class EventLoop : public EventQueue<N>
 {
  public:
-  fp_t call(Event &&events) { return this->enqueue(std::move(events)); }
+  Callback call(Event &&events) { return this->enqueue(std::move(events)); }
 
   void dispatch()
   {

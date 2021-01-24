@@ -1,19 +1,28 @@
 #pragma once
 
-#include "UIButton.h"
 #include "Charlieplex.h"
 #include "EventLoop.h"
 #include "Led.h"
 #include "Macro.h"
+#include "UIButton.h"
 #include "target.h"
 
-enum BtnName
+enum BtnLabel
 {
-  Key1,
-  Key2,
-  Key3,
-  Key4,
-  Key5,
+  M,
+  N,
+  X,
+  Y,
+  Z,
+  STEP1,
+  STEP2,
+  STEP3,
+  STEP4,
+  STEP5,
+  STEP6,
+  STEP7,
+  STEP8,
+  BTN_NUM,
 };
 UIButton Button[] = {
     UIButton(PB4),
@@ -23,8 +32,6 @@ UIButton Button[] = {
     UIButton(PB12),
 };
 
-EventLoop events;
-
 constexpr PinName charlieplex_pin[] = {
     PA10,
     PA8,
@@ -33,7 +40,7 @@ constexpr PinName charlieplex_pin[] = {
     PA9,
 };
 Charlieplex<countof(charlieplex_pin), 4> led(charlieplex_pin);
-enum LedType
+enum LEDLabel
 {
   POT_1,
   POT_2,
