@@ -2,6 +2,7 @@
 
 #include <cstdint>
 
+#include "SystemTick.h"
 #include "common.h"
 #include "target.h"
 
@@ -19,6 +20,7 @@ class UIButton : public GPIO
     set_pull(pull);
     set_mode(Mode::INPUT);
     polarity_ = polarity;
+    system_events.call([this] { scan(); });
   }
 
   uint32_t read()

@@ -4,14 +4,14 @@
 #include "Ticker.h"
 
 Ticker system_tick;
-StaticEvent static_event;
+StaticEvent system_events;
 
 void SysTick_Handler()
 {
   system_tick.tick();
   if (system_tick.read_ms() >= 1ms)
     {
-      static_event.dispatch();
+      system_events.dispatch();
       system_tick.reset();
     }
 }

@@ -2,7 +2,8 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <vector>
+// #include <vector>
+#include <functional>
 
 #include "Literals.h"
 #include "common.h"
@@ -11,7 +12,8 @@ template <size_t N = 32>
 class StaticEvent
 {
  private:
-  Callback _queue[N] = {};
+  // Callback _queue[N] = {};
+  std::function<void()> _queue[N] = {};
   size_t _count = 0;
 
  public:
@@ -22,7 +24,7 @@ class StaticEvent
         _queue[i] = [] {};
       }
   }
-  void call(Callback &&events)
+  void call(const std::function<void()> &events)
   {
     if (_count < N)
       {

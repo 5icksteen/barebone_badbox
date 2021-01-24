@@ -24,7 +24,7 @@ enum BtnLabel
   STEP8,
   BTN_NUM,
 };
-UIButton Button[] = {
+UIButton button[] = {
     UIButton(PB4),
     UIButton(PB3),
     UIButton(PB10),
@@ -39,7 +39,7 @@ constexpr PinName charlieplex_pin[] = {
     PB14,
     PA9,
 };
-Charlieplex<countof(charlieplex_pin), 4> led(charlieplex_pin);
+Charlieplex<countof(charlieplex_pin), 4> leds(charlieplex_pin);
 enum LEDLabel
 {
   POT_1,

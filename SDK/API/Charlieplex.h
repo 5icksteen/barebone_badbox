@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "SystemTick.h"
 // #include "softpwm.h"
 #include "target.h"
 
@@ -53,6 +54,7 @@ class Charlieplex
               }
           }
       }
+    system_events.call([this] { scan(); });
   }
 
   void write(uint32_t index, uint8_t state)

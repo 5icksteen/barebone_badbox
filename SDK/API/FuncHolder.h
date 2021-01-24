@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <functional>
 
+#include "SystemTick.h"
 #include "common.h"
 
 class FuncHolder
@@ -15,6 +16,7 @@ class FuncHolder
   FuncHolder(auto &&func)
   {
     add(std::forward<decltype(func)>(func));
+    system_events.call([this] { dispatch(); });
   }
   void add(auto &&func)
   {

@@ -5,12 +5,18 @@
 
 #include "EventQueue.h"
 #include "Literals.h"
+#include "SystemTick.h"
 #include "common.h"
 
 template <size_t N = 32>
 class EventLoop : public EventQueue<N>
 {
  public:
+  EventLoop()
+  {
+    system_events.call([this] { dispatch(); });
+  }
+
   Callback call(Event &&events) { return this->enqueue(std::move(events)); }
 
   void dispatch()
