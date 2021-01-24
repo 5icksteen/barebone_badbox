@@ -5,6 +5,7 @@
 #include "SystemTick.h"
 #include "common.h"
 #include "target.h"
+extern StaticEvent<> system_events;
 
 class UIButton : public GPIO
 {
