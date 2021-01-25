@@ -2,42 +2,22 @@
 
 #include <cstddef>
 #include <cstdint>
-// #include <vector>
 #include <functional>
+#include <vector>
 
-#include "Literals.h"
-#include "common.h"
-
-template <size_t N = 32>
 class StaticEvent
 {
  private:
-  // Callback _queue[N] = {};
-  std::function<void()> _queue[N] = {};
-  size_t _count = 0;
+  std::vector<std::function<void()>> _queue;
 
  public:
-  StaticEvent()
+  void call(auto&& events)
   {
-    for (size_t i = 0; i < N; i++)
-      {
-        _queue[i] = [] {};
-      }
-  }
-  void call(const std::function<void()> &events)
-  {
-    if (_count < N)
-      {
-        _queue[_count] = std::move(events);
-        _count++;
-      }
+    _queue.push_back(std::forward<decltype(events)>(events));
   }
 
   void dispatch()
   {
-    for (size_t i = 0; i < N; i++)
-      {
-        _queue[i]();
-      }
+    for (const auto& e : _queue) { e(); }
   }
 };

@@ -6,7 +6,7 @@
 
 #include "SystemTick.h"
 #include "common.h"
-extern StaticEvent<> system_events;
+extern StaticEvent system_events;
 
 class FuncHolder
 {

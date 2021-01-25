@@ -7,7 +7,7 @@
 #include "Literals.h"
 #include "SystemTick.h"
 #include "common.h"
-extern StaticEvent<> system_events;
+extern StaticEvent system_events;
 
 template <size_t N = 32>
 class EventLoop : public EventQueue<N>

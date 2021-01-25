@@ -6,7 +6,7 @@
 #include "SystemTick.h"
 // #include "softpwm.h"
 #include "target.h"
-extern StaticEvent<> system_events;
+extern StaticEvent system_events;
 
 enum LedState
 {
