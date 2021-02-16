@@ -9,6 +9,7 @@ CORE_PARAMS += ROM_SIZE=$(ROM_SIZE)
 CORE_PARAMS += RAM_START=$(RAM_START)
 CORE_PARAMS += RAM_SIZE=$(RAM_SIZE)
 CORE_PARAMS += ROM_ALIGN=$(ROM_ALIGN)
+CORE_DEFS += $(CORE_PARAMS)
 
 # FLASH_SIZE += $(findstring x4, $(TARGET))
 # FLASH_SIZE += $(findstring x6, $(TARGET))
@@ -63,53 +64,60 @@ SVD_FILE = ./SDK/Core/SVD/$(SVD_NAME)
 # endif
 ifeq ($(findstring STM32F0, $(TARGET)), STM32F0)
 CORE_FLAGS := -mthumb -mcpu=cortex-m0 -mfloat-abi=soft
-CORE_DEFS = $(TARGET) STM32F0 TARGET_SERIES=f0
+CORE_DEFS += $(TARGET) STM32F0 TARGET_SERIES=f0
 endif
 ifeq ($(findstring STM32F1, $(TARGET)), STM32F1)
 CORE_FLAGS := -mthumb -mcpu=cortex-m3 -mfloat-abi=soft
-CORE_DEFS = $(TARGET) STM32F1 TARGET_SERIES=f1
+CORE_DEFS += $(TARGET) STM32F1 TARGET_SERIES=f1
 endif
 ifeq ($(findstring STM32F2, $(TARGET)), STM32F2)
 CORE_FLAGS := -mthumb -mcpu=cortex-m3 -mfloat-abi=soft
-CORE_DEFS = $(TARGET) STM32F2 TARGET_SERIES=f2
+CORE_DEFS += $(TARGET) STM32F2 TARGET_SERIES=f2
 endif
 ifeq ($(findstring STM32F3, $(TARGET)), STM32F3)
 CORE_FLAGS := -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CORE_DEFS = $(TARGET) STM32F3 TARGET_SERIES=f3
+CORE_DEFS += $(TARGET) STM32F3 TARGET_SERIES=f3
 endif
 ifeq ($(findstring STM32F4, $(TARGET)), STM32F4)
 CORE_FLAGS := -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CORE_DEFS = $(TARGET) STM32F4 TARGET_SERIES=f4 USE_FULL_LL_DRIVER
+TARGET_SERIES += STM32F4
+CORE_DEFS += $(TARGET) $(TARGET_SERIES)
 endif
 ifeq ($(findstring STM32F7, $(TARGET)), STM32F7)
 CORE_FLAGS := -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16
-CORE_DEFS = $(TARGET) STM32F7 TARGET_SERIES=f7
+CORE_DEFS += $(TARGET) STM32F7 TARGET_SERIES=f7
 endif
 ifeq ($(findstring STM32G0, $(TARGET)), STM32G0)
 CORE_FLAGS := -mthumb -mcpu=cortex-m0plus -mfloat-abi=soft
-CORE_DEFS = $(TARGET) STM32G0 TARGET_SERIES=g0
+CORE_DEFS += $(TARGET) STM32G0 TARGET_SERIES=g0
 endif
 ifeq ($(findstring STM32G4, $(TARGET)), STM32G4)
 CORE_FLAGS := -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CORE_DEFS = $(TARGET) STM32G4 TARGET_SERIES=g4
+CORE_DEFS += $(TARGET) STM32G4 TARGET_SERIES=g4
 endif
 ifeq ($(findstring STM32H7, $(TARGET)), STM32H7)
 CORE_FLAGS := -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16
-CORE_DEFS = $(TARGET) STM32H7 TARGET_SERIES=h7
+CORE_DEFS += $(TARGET) STM32H7 TARGET_SERIES=h7
 endif
 ifeq ($(findstring STM32L0, $(TARGET)), STM32L0)
 CORE_FLAGS := -mthumb -mcpu=cortex-m0plus -mfloat-abi=soft
-CORE_DEFS = $(TARGET) STM32L0 TARGET_SERIES=l0
+CORE_DEFS += $(TARGET) STM32L0 TARGET_SERIES=l0
 endif
 ifeq ($(findstring STM32L1, $(TARGET)), STM32L1)
 CORE_FLAGS := -mthumb -mcpu=cortex-m3 -mfloat-abi=soft
-CORE_DEFS = $(TARGET) STM32L1 TARGET_SERIES=l1
+CORE_DEFS += $(TARGET) STM32L1 TARGET_SERIES=l1
 endif
 ifeq ($(findstring STM32L4, $(TARGET)), STM32L4)
 CORE_FLAGS := -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CORE_DEFS = $(TARGET) STM32L4 TARGET_SERIES=l4
+CORE_DEFS += $(TARGET) STM32L4 TARGET_SERIES=l4
 endif
 ifeq ($(findstring STM32l5, $(TARGET)), STM32L5)
 CORE_FLAGS := -mthumb -mcpu=cortex-m33 -mfloat-abi=hard -mfpu=fpv5-sp-d16
-CORE_DEFS = $(TARGET) STM32L5 TARGET_SERIES=l5
+CORE_DEFS += $(TARGET) STM32L5 TARGET_SERIES=l5
 endif
+
+TARGET_L = $(shell echo $(TARGET) | tr A-Z a-z)
+TARGET_SERIES_L = $(shell echo $(TARGET_SERIES) | tr A-Z a-z)
+
+CORE_DEFS += TARGET=$(TARGET_L)
+CORE_DEFS += TARGET_BASE=$(TARGET_SERIES_L)xx

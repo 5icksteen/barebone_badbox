@@ -8,7 +8,6 @@
 #include <cerrno>
 #include <csignal>
 #include <cstddef>
-// #include <cstring>
 
 extern int __io_putchar(int ch) __attribute__((weak));
 extern int __io_getchar(void) __attribute__((weak));

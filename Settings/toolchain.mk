@@ -42,7 +42,7 @@ INCLUDES += $(wildcard */*/*/*/*/*/*.h)
 INCLUDES += $(wildcard */*/*/*/*/*/*/*.h)
 INC_PATH := $(addprefix -I,$(dir $(filter %.h,$(INCLUDES))))
 
-OPT_FLAGS ?= -O2
+OPT_FLAGS ?= -O3
 C_VERSION ?= -std=gnu17
 CXX_VERSION ?= -std=gnu++20
 
@@ -52,6 +52,10 @@ OTHER_FLAGS	+= -ffreestanding
 OTHER_FLAGS	+= -fno-exceptions
 OTHER_FLAGS	+= -fno-rtti
 OTHER_FLAGS	+= -fno-use-cxa-atexit
+OTHER_FLAGS	+= -fpermissive
+OTHER_FLAGS	+= -fsingle-precision-constant
+OTHER_FLAGS	+= -funroll-loops
+OTHER_FLAGS	+= -flto
 # OTHER_FLAGS	+= -fmodules-ts
 # OTHER_FLAGS	+= -fmodules-header
 # OTHER_FLAGS	+= -fcoroutines
@@ -68,6 +72,9 @@ OTHER_FLAGS	+= -fno-use-cxa-atexit
 WARNING_OPTIONS += -Wall
 WARNING_OPTIONS += -Wextra
 WARNING_OPTIONS += -Wno-literal-suffix
+# WARNING_OPTIONS += -Werror=double-promotion
+# WARNING_OPTIONS += -Werror=float-conversion
+# WARNING_OPTIONS += -Wunsuffixed-float-constants
 # WARNING_OPTIONS += -Wno-volatile
 
 LINK_OPTIONS +=	-nostartfiles

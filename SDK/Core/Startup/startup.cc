@@ -1,10 +1,15 @@
+#include <cstdint>
+
 #include "cortex_vectors.h"
-#include "target.h"
-#include "vendor_vectors.h"
+#include "macro.h"
+#include GEN_HEADER(TARGET, _system)
+#include GEN_HEADER(TARGET, _vectors)
+
+constexpr size_t NUM_VECTORS = 1U + NUM_CORTEX_VECTORS + NUM_VENDOR_VECTORS;
 
 inline void copy_data_init()
 {
-  extern unsigned __data_load, __data_start, __data_end;
+  extern uint32_t __data_load, __data_start, __data_end;
   for (auto dst = &__data_start, src = &__data_load; dst < &__data_end;)
     {
       *dst++ = *src++;
@@ -13,20 +18,12 @@ inline void copy_data_init()
 
 inline void fill_zero_bss()
 {
-  extern unsigned __bss_start, __bss_end;
+  extern uint32_t __bss_start, __bss_end;
   for (auto dst = &__bss_start; dst < &__bss_end;)
     {
       *dst++ = 0;
     }
 }
-
-// inline void call_preinit_array() {
-//     extern void (*__preinit_array_start[])(), (*__preinit_array_end[])();
-//     for (auto array = __preinit_array_start; array < __preinit_array_end;) {
-//         (*array)();
-//         array++;
-//     }
-// }
 
 inline void call_init_array()
 {
@@ -38,14 +35,6 @@ inline void call_init_array()
     }
 }
 
-// inline void call_fini_array() {
-//     extern void (*__fini_array_start[])(), (*__fini_array_end[])();
-//     for (auto array = __fini_array_start; array < __fini_array_end;) {
-//         (*array)();
-//         array++;
-//     }
-// }
-
 void Default_Handler()
 {
   for (;;) {}
@@ -53,19 +42,11 @@ void Default_Handler()
 
 void Reset_Handler()
 {
-  // __disable_irq();
-  __Enable_FPU();
+  system_preinit();
   copy_data_init();
   fill_zero_bss();
-  // call_preinit_array();
   call_init_array();
-  extern void system_init();
   system_init();
-  extern void clock_init();
-  clock_init();
-  // __enable_irq();
   extern int main();
   main();
-  // call_fini_array();
-  // Default_Handler();
 }

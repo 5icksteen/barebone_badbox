@@ -1601,8 +1601,8 @@ extern "C"
 #endif
 #include CMSIS_VECTAB_VIRTUAL_HEADER_FILE
 #else
-#define NVIC_SetVector __NVIC_SetVector
-#define NVIC_GetVector __NVIC_GetVector
+// #define NVIC_SetVector __NVIC_SetVector
+// #define NVIC_GetVector __NVIC_GetVector
 #endif /* (CMSIS_VECTAB_VIRTUAL) */
 
 #define NVIC_USER_IRQ_OFFSET 16

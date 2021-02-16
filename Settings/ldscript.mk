@@ -3,7 +3,7 @@ define LDSCRIPT
 
 MEMORY {
     FLASH (xrw) : ORIGIN = $(ROM_START), LENGTH = $(ROM_SIZE)
-    RAM (rw)    : ORIGIN = $(RAM_START), LENGTH = $(RAM_SIZE)
+    RAM (rw)    : ORIGIN = $(RAM_START) + 0x200, LENGTH = $(RAM_SIZE) - 0x200
 }
 
 SECTIONS {
@@ -20,15 +20,6 @@ SECTIONS {
         *(.text*)
         *(.rodata)
         *(.rodata*)
-    } >FLASH
-
-    .preinit_array : {
-        . = ALIGN(4);
-        __preinit_array_start = .;
-        KEEP (*(SORT(.preinit_array.*)))
-        KEEP (*(.preinit_array*))
-        . = ALIGN(4);
-        __preinit_array_end = .;
     } >FLASH
 
     .init_array : {
@@ -48,19 +39,6 @@ SECTIONS {
         . = ALIGN(4);
         __fini_array_end = .;
     } >FLASH
-
-    .ARM.extab : ALIGN(4){
-		*(.ARM.extab* .gnu.linkonce.armextab.*)
-		*(.gcc_except_table)
-		*(.eh_frame_hdr)
-		*(.eh_frame)
-	} >FLASH
-
-	.ARM.exidx : ALIGN(4){
-		__exidx_start = .;
-		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
-		__exidx_end = .;
-	} >FLASH
 
     __data_load = .;
 
@@ -86,8 +64,9 @@ SECTIONS {
     .heap (NOLOAD) : ALIGN(8)
 	{
 		__heap_start = .;
-        __heap_end = __heap_start + 0x400;
+        __heap_end = . + 0x1000;
 	} > RAM
+
     __stack_top = ORIGIN(RAM) + LENGTH(RAM);
 }
 
